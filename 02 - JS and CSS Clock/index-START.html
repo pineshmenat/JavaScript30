@@ -9,9 +9,9 @@
 
     <div class="clock">
       <div class="clock-face">
-        <div class="hand hour-hand"></div>
-        <div class="hand min-hand"></div>
-        <div class="hand second-hand"></div>
+        <div class="hand hour-hand" style="background-color: blue;"></div>
+        <div class="hand min-hand" style="background-color: green;"></div>
+        <div class="hand second-hand" style="background-color: red"></div>
       </div>
     </div>
 
@@ -62,11 +62,45 @@
       background: black;
       position: absolute;
       top: 50%;
+      transform-origin: 100%;
+      transform: rotate(90deg);
+      transition: all 0.05s;
+      transition-timing-function: cubic-bezier(0.1, 2.7, 0.58, 1);
     }
 
   </style>
 
+
+
   <script>
+    let date = new Date();
+    let hour = date.getHours();
+    let minutes = date.getMinutes();
+    let seconds = date.getSeconds();
+
+    let hourHand = document.querySelector(".hour-hand");
+    let minuteHand = document.querySelector(".min-hand");
+    let secondHand = document.querySelector(".second-hand");
+    //for every hour: move hand by 30
+    //for every minute: move hand by 6
+    //for every second: move hand by 6
+
+    //for every second move hour hand by 30/3600
+    //for every second move minute hand by 6/60
+    //for every second move hand by 6
+    let hourAngle = 90 + (hour%12) * 30;
+    let minAngle = 90 + minutes * 6;
+    let secAngle = 90 + seconds * 6;
+    setInterval(() => {
+      hourAngle += 30/3600;
+      minAngle += 1/10;
+      secAngle += 6;
+      hourHand.style.transform = `rotate(${hourAngle}deg)`;
+      minuteHand.style.transform = `rotate(${minAngle}deg)`;
+      secondHand.style.transform = `rotate(${secAngle}deg)`;
+    }, 1000);
+
+    //I believe provided solution is more effective/accurate as my solution doesn't account for JS engine processing lag
 
 
   </script>
