@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>Scoped CSS Variables and JS</title>
 </head>
+
 <body>
   <h2>Update CSS Variables with <span class='hl'>JS</span></h2>
 
@@ -21,6 +23,21 @@
   <img src="https://source.unsplash.com/7bwQXzbF6KE/800x500">
 
   <style>
+    :root {
+      --base: yellow;
+      --spacing: 10px;
+      --blur: 0px;
+    }
+
+    img {
+      background-color: var(--base);
+      padding: var(--spacing);
+      filter: blur(var(--blur));
+    }
+
+    .hl {
+      color: var(--base);
+    }
 
     /*
       misc styles, nothing to do with CSS variables
@@ -45,7 +62,26 @@
   </style>
 
   <script>
+    let spacing = document.querySelector("#spacing");
+    let blur = document.querySelector("#blur");
+    let base = document.querySelector("#base");
+    console.log({base})
+
+    spacing.addEventListener("input", () => {
+      // console.log(getComputedStyle(document.documentElement).getPropertyValue("--spacing"));
+      document.documentElement.style.setProperty("--spacing", spacing.value + "px");
+    });
+
+    blur.addEventListener("input", function() {
+      document.documentElement.style.setProperty("--blur", this.value + "px");
+    });
+
+    base.addEventListener("input", () => {
+      document.documentElement.style.setProperty("--base", base.value);
+    })
+
   </script>
 
 </body>
+
 </html>
